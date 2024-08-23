@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::resource('account', UserController::class );
+
+Route::resource('post', PostController::class );
+
+
 Route::get('/', function () {
     return view('home');
 });
@@ -28,10 +33,21 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
-Route::get('/post', [PostController::class, 'index'])->middleware('auth', 'author')->name('author.index');
+Route::get('/post', [PostController::class, 'index'])->middleware('auth', 'author')->name('post.index');
 
-Route::get('/account', [UserController::class, 'index'])->middleware('auth', 'admin')->name('admin.index');
+Route::get('/createpost', [PostController::class, 'create'])->middleware('auth', 'author')->name('post.create');
 
-Route::get('/createaccount', [UserController::class, 'create'])->middleware('auth', 'admin')->name('admin.create');
+Route::get('/post/{id}/edit', [PostController::class, 'edit'])->name('post.edit');
+
+Route::put('/post/{id}', [PostController::class, 'update'])->name('post.update');
+
+
+Route::get('/account', [UserController::class, 'index'])->middleware('auth', 'admin')->name('account.index');
+
+Route::get('/createaccount', [UserController::class, 'create'])->middleware('auth', 'admin')->name('account.create');
+
+Route::get('/account/{id}/edit', [UserController::class, 'edit'])->name('account.edit');
+
+Route::put('/account/{id}', [UserController::class, 'update'])->name('account.update');
 
 

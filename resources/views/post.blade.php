@@ -13,7 +13,7 @@
 
 
   <div class="mt-5">
-    <div class="relative overflow-x-auto w-[800px]">
+    <div class="relative overflow-x-auto w-[1000px]">
     <table class="w-full text-sm text-left rtl:text-right text-gray-400">
       <thead class="text-xs  uppercase bg-gray-700 text-gray-400">
           <tr>
@@ -35,32 +35,16 @@
           </tr>
         </thead>
         <tbody>
-            {{-- @foreach ($formatLaporan as $formats)
+            @foreach ($posts as $postA)
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="font-bold px-6 py-4  text-gray-900 whitespace-nowrap dark:text-white">
-                {{ $formats->nama_format }}
+                <th scope="row" class="font-bold px-6 py-4  whitespace-nowrap dark:text-white">
+                {{ $postA->title }}
                 </th>
-                <td class="font-medium text-gray-900 px-6 py-4">
-                    {{ $formats->tipe_format }}
+                <td class="font-medium  px-6 py-4">
+                    {{ $postA->content}}
                 </td>
-                @if (auth()->user()->role == 'admin')
-                <td class="px-6">
-                    <a href="{{ route('format.download', $formats->id) }}" target="_blank">
-                        <button class="inline-flex rounded-md bg-green-500 text-white p-2" type="button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 lucide lucide-arrow-down-to-line">
-                                <path d="M12 17V3"/>
-                                <path d="m6 11 6 6 6-6"/>
-                                <path d="M19 21H5"/>
-                            </svg>
-                            <p class="font-bold m-1">
-                                Download Format
-                            </p>
-                        </button>
-                    </a>
-                </td>
-                @else
                 <td class="px-6 inline-flex py-8">
-                  <a href="{{ route('format.edit', $formats->id) }}" >
+                  <a href="{{ route('post.edit', $postA->id) }}" >
                       <button class="" type="button">
                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil">
                          <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
@@ -68,7 +52,7 @@
                        </svg>
                       </button>
                   </a>
-                  <form action="{{ route('format.destroy', $formats->id) }}" method="POST">
+                  <form action="{{ route('post.destroy', $postA->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button class="" type="submit" onclick="return confirm('Are you sure?')">
@@ -82,12 +66,14 @@
                     </button>
                   </form>
                 </td>
-                @endif
                 <td class="px-7">
-                    {{ date('d-m-Y', strtotime($formats->created_at ))}}
+                    {{ $postA->user->name }}
                 </td>
+                <td class="px-7">
+                  {{ date('d-m-Y', strtotime($postA->created_at ))}}
+              </td>
             </tr>
-            @endforeach --}}
+            @endforeach
       </tbody>
     </table>
   </div>
